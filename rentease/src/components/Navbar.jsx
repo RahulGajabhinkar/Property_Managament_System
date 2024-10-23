@@ -16,7 +16,7 @@ export default function Navbar(props) {
           <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
-          <a className="navbar-brand" href="/settled">StayEase</a>
+          <a className="navbar-brand text-light" href="/settled">StayEase</a>
           {/* <Link to="/AdminRegister" ><button className="btn btn2 btn-danger">SignUp</button></Link> */}
           <div>
            <button className='btn btn0 btn-dark'onClick={handleClick}>Get Started</button>

@@ -1,45 +1,56 @@
-const express= require('express') 
-const app= express()
-const port=5000
-const db=require('./db')
-const cors=require('cors')
-const Properties = require('./models/Properties')
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const Properties = require('./models/Properties'); // Ensure this points to the correct file
+const db = require('./db'); // Make sure this is defined and functional
+const CreateUserRoutes = require("./Routes/CreateUser"); // Corrected import for user routes
 
-const mongoose=require('mongoose')
+const app = express();
+const port = 5000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// MongoDB connection
 mongoose.connect("mongodb+srv://rahulgajabhinkar19:Rahul@stayease.qawkhct.mongodb.net/student")
-.then(
-    async ()=>{
-        console.log("connected to database")
+    .then(() => {
+        console.log("Connected to database");
     })
-.catch((err)=>console.log(err))
+    .catch(err => console.log(err));
 
-app.use((req, res, next)=> {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-})
-app.use(cors())
-db();
+// Basic route
+app.get("/", (req, res) => {
+    res.send("Hello world");
+});
 
-app.get("/",(req,res) => {
-  res.send("Hello world")
-})
-app.use(express.json())
-app.use("/api", require("./Routes/AddProperties"))
-
-app.get('/api/addproperty',async(req, res) => {
-  try {
-    console.log("this is me this i syou this is wll")
-    const propertyList = await mongoose.connection.db.collection('properties')
-    const data= await propertyList.find().toArray()
-    res.json(data)
-    console.log(data)
-  }
-  catch (err) {
-    console.error(err)
+// Route to add a property
+app.post('/api/addproperty', async (req, res) => {
+    try {
+        const newProperty = new Properties(req.body);
+        await newProperty.save();
+        res.status(201).json(newProperty);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error saving property");
     }
-})
-app.use("/api", require("./Routes/CreateUser"))
+});
+
+// Route to fetch properties
+app.get('/api/properties', async (req, res) => {
+    try {
+        const properties = await Properties.find();
+        res.json(properties);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching properties");
+    }
+});
+
+// User routes
+app.use("/api", CreateUserRoutes);
+
+// Start server
 app.listen(port, () => {
-  console.log("server is running on port 5000");
-})
+    console.log("Server is running on port 5000");
+});

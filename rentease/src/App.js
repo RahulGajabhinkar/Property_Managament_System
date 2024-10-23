@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 
 import './App.css';
-import PendingIssues from './components/PendingIssues';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AdminLogin from './components/AdminLogin';
 import AdminRegister from './components/AdminRegister';
@@ -18,12 +17,11 @@ function App() {
     <div>
       <Router>
         <Routes>
-          <Route path="/" element={<Home/>}/> 
+          <Route path="/profile" element={<Home/>}/> 
           <Route path="/Navbar" element={<Navbar/>} />
           <Route path="/AdminRegister" element={<AdminRegister/>} />
           <Route path="/AdminLogin"element= {<AdminLogin/>}/>
-          <Route path="/PendingIssues" element={<PendingIssues/>}/>
-          <Route path="/profile" element = {<Profile/>}/>
+          <Route path="/" element = {<Profile/>}/>
           <Route path="/addProperty" element = {<AddProperty/>}/>
         </Routes>
       </Router>

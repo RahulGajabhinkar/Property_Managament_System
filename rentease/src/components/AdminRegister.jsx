@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import "./AdminRegister.css"
 import { Link, useNavigate } from "react-router-dom";
+import Navbar from './Navbar';
 function AdminRegister() {
   let navigate = useNavigate()
   const [credentials, setCredentials] = useState({name:"", lastname:"", email:"", password:"", contactNo:"", landmark:"", street:"",city:"", pincode:""})
@@ -28,10 +29,12 @@ function AdminRegister() {
   }
   return (
     <>
+    <Navbar/>
       <div className="registerContainer">
-        <h3> Register</h3>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
+        
+        <form className = "register_form" onSubmit={handleSubmit}>
+        <h2 className = "register_heading"> Register</h2>
+          <div className="  form-group">
             <label htmlFor="exampleInputName">Name</label>
             <input
               type="text"
@@ -158,11 +161,10 @@ function AdminRegister() {
               onChange={onChange}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn  register_buttons btn-primary">
             Submit
           </button>
-          
-            <Link to='/AdminLogin'><button type="button" className="btn btn-dark">Already an user</button></Link>
+          <Link to='/AdminLogin'><button type="button" className="register_buttons btn btn-danger">Already an user</button></Link>
           
         </form>
       </div>

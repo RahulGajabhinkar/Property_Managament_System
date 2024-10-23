@@ -1,57 +1,37 @@
-.loginContainer  {
-    margin-top:100px;
-    width:600px;
-    align-items:center;
-    justify-content: center;
-    border: solid rgb(58, 58, 58) 2px;
-    padding-left: 50px;
-    padding-top: 30px;
-    padding-right: 50px;
-    padding-bottom:50px;
-    border-radius: 20px;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
-
-}
-h2 {
+.loginContainer {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family:sans-serif;
+    flex-direction: column;
+    background-color: white;
+    
 }
-.Text {
-    font-size: 20px;
-    padding-top: 10px;
-    padding-bottom:6px;
+
+.login_form {
+    margin-top: 100px;
+    background-color: #ffffff;
+    width: 600px;
+    height: 400px;
 }
-.btn0 {
-    border-radius: 20px;
-    padding-left: 20px;
-    padding-right:20px;
+.login_heading {
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bolder;
+}
+.login_buttons {
+    display: flex;
+    flex-direction: row;
 }
 .btn1 {
-    margin-top:30px;
-    margin-left: 20px;
-   padding-left: 80px;
-    padding-right : 80px;
+    width: 240px;
+    margin:10px;
+    
 }
-.btn2 {
-    margin-top:30px;
-    margin-left:10px;
-    padding-left: 80px;
-    padding-right:80px;
+
+.submit_button {
+    padding-left: 0px;
+    padding-right: 0px;
 }
-.Cancel {
-    display: flex;
-    flex-direction: row-reverse;
-    margin: 0%;
-}
-.Cancel1 {
-    margin: 0%;
-    display: flex;
-        
-    padding-bottom:10px;
-    font-size: 14px;
-    /* background-color:   rgb(115, 157, 157); */
-    border-radius: 50%;
-    font-weight: bold;
+.signup_button {
+    padding-top:50px;
+    padding-bottom:50px;
+    
 }
