@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AdminLogin from './components/AdminLogin';
@@ -9,6 +7,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Profile from './components/AdminProfile';
 import AddProperty from './components/AddProperty';
+import React from "react";
 function App() {
   const [isVisible , setIsVisible] =useState(true);
   
@@ -24,8 +23,7 @@ function App() {
           <Route path="/" element = {<Profile/>}/>
           <Route path="/addProperty" element = {<AddProperty/>}/>
         </Routes>
-      </Router>
-      {/* <AdminRegister/> */}
+      </Router> 
     </div>
   );
 }

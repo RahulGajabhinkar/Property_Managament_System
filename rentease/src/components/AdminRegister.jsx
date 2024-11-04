@@ -1,39 +1,60 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import "./AdminRegister.css"
+import "./AdminRegister.css";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from './Navbar';
+import Navbar from "./Navbar";
 function AdminRegister() {
-  let navigate = useNavigate()
-  const [credentials, setCredentials] = useState({name:"", lastname:"", email:"", password:"", contactNo:"", landmark:"", street:"",city:"", pincode:""})
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    const  response =  await fetch("http://localhost:5000/api/createuser",{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json", 
-      },
-      body: JSON.stringify({name:credentials.name,email:credentials.email, password:credentials.password, contactNo:credentials.contactNo, landmark:credentials.landmark,street:credentials.street,  city:credentials.city, pincode:credentials.pincode} )
+  let navigate = useNavigate();
+  const [credentials, setCredentials] = useState({
+    name: "",
+    lastname: "",
+    email: "",
+    password: "",
+    contactNo: "",
+    landmark: "",
+    street: "",
+    city: "",
+    pincode: "",
   });
-  const data=await response.json()
-  console.log(data);
-  if(data.success)
-    navigate("/AdminLogin")
-    
-  if(! data.success) {
-    alert("User already exists")
-  }
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/api/createuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: credentials.name,
+          email: credentials.email,
+          password: credentials.password,
+          contactNo: credentials.contactNo,
+          landmark: credentials.landmark,
+          street: credentials.street,
+          city: credentials.city,
+          pincode: credentials.pincode,
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+      if (data.success) navigate("/AdminLogin");
+
+      if (!data.success) {
+        alert("User already exists");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
-  }
+  };
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className="registerContainer">
-        
-        <form className = "register_form" onSubmit={handleSubmit}>
-        <h2 className = "register_heading"> Register</h2>
+        <form className="register_form" onSubmit={handleSubmit}>
+          <h2 className="register_heading"> Register</h2>
           <div className="  form-group">
             <label htmlFor="exampleInputName">Name</label>
             <input
@@ -41,7 +62,7 @@ function AdminRegister() {
               className="form-control"
               id="exampleInputName"
               placeholder="Name"
-              name='name'
+              name="name"
               value={credentials.name}
               onChange={onChange}
             />
@@ -53,7 +74,7 @@ function AdminRegister() {
               className="form-control"
               id="exampleInputLastName"
               placeholder="Last Name"
-              name='lastname'
+              name="lastname"
               value={credentials.lastname}
               onChange={onChange}
             />
@@ -66,7 +87,7 @@ function AdminRegister() {
               className="form-control"
               id="exampleInputContactNo"
               placeholder="ContactNo"
-              name='contactNo'
+              name="contactNo"
               value={credentials.contactNo}
               onChange={onChange}
             />
@@ -79,7 +100,7 @@ function AdminRegister() {
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
               placeholder="Enter email"
-              name='email'
+              name="email"
               value={credentials.email}
               onChange={onChange}
             />
@@ -94,7 +115,7 @@ function AdminRegister() {
               className="form-control"
               id="exampleInputPassword1"
               placeholder="Password"
-              name='password'
+              name="password"
               value={credentials.password}
               onChange={onChange}
             />
@@ -117,7 +138,7 @@ function AdminRegister() {
               className="form-control"
               id="exampleInputLandMark"
               placeholder="landmark"
-              name='landmark'
+              name="landmark"
               value={credentials.landmark}
               onChange={onChange}
             />
@@ -130,7 +151,7 @@ function AdminRegister() {
               className="form-control"
               id="exampleInputStreet"
               placeholder="Street"
-              name='street'
+              name="street"
               value={credentials.street}
               onChange={onChange}
             />
@@ -143,7 +164,7 @@ function AdminRegister() {
               className="form-control"
               id="exampleInputCity"
               placeholder="City"
-              name='city'
+              name="city"
               value={credentials.city}
               onChange={onChange}
             />
@@ -156,7 +177,7 @@ function AdminRegister() {
               className="form-control"
               id="exampleInputPincode"
               placeholder="Pincode"
-              name='pincode'
+              name="pincode"
               value={credentials.pincode}
               onChange={onChange}
             />
@@ -164,8 +185,11 @@ function AdminRegister() {
           <button type="submit" className="btn  register_buttons btn-primary">
             Submit
           </button>
-          <Link to='/AdminLogin'><button type="button" className="register_buttons btn btn-danger">Already an user</button></Link>
-          
+          <Link to="/AdminLogin">
+            <button type="button" className="register_buttons btn btn-danger">
+              Already an user
+            </button>
+          </Link>
         </form>
       </div>
     </>

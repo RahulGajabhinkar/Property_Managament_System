@@ -1,27 +1,12 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+// models/Property.js
+const mongoose = require("mongoose");
 
-const propertySchema = new Schema({
-    landmark: {
-        type: String,
-        required: true
-    },
-    street: {
-        type: String,
-        required: true
-    },
-    city: {
-        type: String,
-        required: true
-    },
-    pincode: {
-        type: String,
-        required: true
-    },
-    images: {
-        type: String,
-        required: true
-    }
+const propertySchema = new mongoose.Schema({
+  landmark: String,
+  street: String,
+  city: String,
+  pincode: String,
+  imageUrl: String,
 });
 
-module.exports = mongoose.model('Properties', propertySchema);
+module.exports = mongoose.model("Property", propertySchema);

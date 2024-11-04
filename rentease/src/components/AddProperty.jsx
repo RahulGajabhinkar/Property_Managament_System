@@ -9,51 +9,43 @@ export default function AddProperty({ onClose }) {
     street: "",
     city: "",
     pincode: "",
-    images: "",
   });
+  const [imageFile, setImageFile] = useState(null);
   let navigate = useNavigate();
+
   const handleClose = () => {
     navigate("/profile");
   };
 
-  const updateFile = async(files) => {
-    if(!files){
-      console.log("No files selected")
-    }
+  const handleFileChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append("landmark", information.landmark);
     formData.append("street", information.street);
     formData.append("city", information.city);
     formData.append("pincode", information.pincode);
+    formData.append("images", imageFile); // Append the image file
 
-  }
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
     try {
-      const file = updateFile(information.images)
-    }
-    catch(error) {
-
-    }
-    try {
-      const response = await fetch("http://localhost:5000/api/addproperty", {
-        method: "POST",
-        body: formData,
+      const response = await axios.post("http://localhost:5000/api/addproperty", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-      if (!response.ok) {
-        console.log();
-        throw new Error("Network response was not ok");
+      if (response.status === 201) {
+        console.log("Property added:", response.data);
+        navigate("/profile"); // Redirect to profile or any other page after success
       }
-      const data = await response.json();
-      console.log("Property added:", data);
     } catch (error) {
       console.error("Error posting property:", error);
     }
   };
 
-  // Handle input change for text fields
   const onChange = (e) => {
     setInformation({ ...information, [e.target.name]: e.target.value });
   };
@@ -123,11 +115,16 @@ export default function AddProperty({ onClose }) {
             onChange={onChange}
           />
         </div>
-        <div>
-          <input 
-          type = "file"
-          name = "images"
-          accept="images/*"/>
+
+        <div className="form-group">
+          <input
+            type="file"
+            className="form-control"
+            id="exampleInputFile"
+            name="images"
+            onChange={handleFileChange}
+            accept="image/*"
+          />
         </div>
 
         <div>
