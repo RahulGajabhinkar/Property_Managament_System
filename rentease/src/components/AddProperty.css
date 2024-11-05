@@ -1,4 +1,4 @@
-/* Blur background for the form */
+
 .blur-background {
   position: fixed;
   top: 0;
@@ -6,14 +6,13 @@
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px); /* Optional: adds a blur effect */
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-/* Styling for the form itself */
 form {
   background-color: white;
   padding: 20px;

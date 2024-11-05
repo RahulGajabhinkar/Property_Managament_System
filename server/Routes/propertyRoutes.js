@@ -1,46 +1,48 @@
-// routes/propertyRoutes.js
-const express = require("express");
-const multer = require("multer");
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const cloudinary = require("cloudinary").v2;
-const Property = require("../models/Properties");
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "properties",
-    allowed_formats: ["jpg", "png"],
-  },
-});
-
-const upload = multer({ storage });
-
+const express = require('express');
+const Admin = require('../models/Users');
+const Property = require('../models/Properties'); // Assuming this is your property model
 const router = express.Router();
 
-router.post("/addproperty", upload.single("images"), async (req, res) => {
+router.get('/getUserInfo', async (req, res) => {
+  const { email } = req.query;
   try {
-    const { landmark, street, city, pincode } = req.body;
-    const imageUrl = req.file.path; // Image URL from Cloudinary
-
-    const property = new Property({
-      landmark,
-      street,
-      city,
-      pincode,
-      imageUrl,
-    });
-
-    await property.save();
-    res.status(201).json(property);
+    const user = await Admin.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json({ name: user.name, email: user.email, contact: user.contact, address: user.address });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error adding property" });
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get('/addproperty', async (req, res) => {
+  const { email } = req.query;
+  try {
+    const properties = await Property.find({ email: email }); 
+    res.json(properties)
+    console.log(properties)
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+// Assuming you're in the same file as your other routes
+router.post('/addproperty', async (req, res) => {
+  const { email, landmark, street, city, pincode } = req.body;
+
+  const newProperty = new Property({
+    email,
+    landmark,
+    street,
+    city,
+    pincode,
+  });
+
+  try {
+    await newProperty.save();
+    res.status(201).json({ message: "Property added successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to add property", error });
   }
 });
 

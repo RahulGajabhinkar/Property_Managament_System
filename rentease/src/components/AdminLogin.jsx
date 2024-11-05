@@ -13,13 +13,16 @@ export default function AdminLogin(props) {
   const [credentials, setCredentials] = useState({ email:"", password:""})
   const handleSubmit = async(e) => {
     e.preventDefault();
-    const  response =  await fetch("http://localhost:5000/api/loginuser",{
+    const Body = JSON.stringify({email :credentials.email, password:credentials.password})
+    console.log(Body)
+    const  response =  await fetch("http://localhost:8001/api/loginuser",{
       method: "POST",
       headers: {
         "Content-Type": "application/json", 
       },
-      body: JSON.stringify({email:credentials.email, password:credentials.password} )
+      body:Body
   });
+  console.log("completed fetching")
   const data=await response.json()
   console.log(data);
 
@@ -27,6 +30,7 @@ export default function AdminLogin(props) {
     alert("Enter valid credentials")
   }
   if(data.success) {
+    localStorage.setItem('email', credentials.email);
     navigate('/');
   }
   }

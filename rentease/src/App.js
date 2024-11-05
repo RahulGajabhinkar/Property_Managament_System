@@ -19,7 +19,7 @@ function App() {
           <Route path="/profile" element={<Home/>}/> 
           <Route path="/Navbar" element={<Navbar/>} />
           <Route path="/AdminRegister" element={<AdminRegister/>} />
-          <Route path="/AdminLogin"element= {<AdminLogin/>}/>
+          <Route path="/AdminLogin" element= {<AdminLogin/>}/>
           <Route path="/" element = {<Profile/>}/>
           <Route path="/addProperty" element = {<AddProperty/>}/>
         </Routes>
